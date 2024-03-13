@@ -7,7 +7,7 @@ import {
   DocumentIngress,
   Exception,
   KeyValuePairString,
-  KnownDocumentIngressDocumentType,
+  KnownDocumentType,
   MetricPoint,
   MonitoringDataPoint,
   RemoteDependency,
@@ -133,6 +133,8 @@ export function resourceMetricsToQuickpulseDataPoint(
     scopeMetric.metrics.forEach((metric) => {
       metric.dataPoints.forEach((dataPoint) => {
         let metricPoint: MetricPoint = {
+          name: "",
+          value: 0,
           weight: 4,
         };
 
@@ -192,7 +194,7 @@ export function resourceMetricsToQuickpulseDataPoint(
 
 export function getSpanDocument(span: ReadableSpan): Request | RemoteDependency {
   let document: Request | RemoteDependency = {
-    documentType: KnownDocumentIngressDocumentType.Request,
+    documentType: KnownDocumentType.Request,
   };
   const httpMethod = span.attributes[SemanticAttributes.HTTP_METHOD];
   const grpcStatusCode = span.attributes[SemanticAttributes.RPC_GRPC_STATUS_CODE];
@@ -210,7 +212,7 @@ export function getSpanDocument(span: ReadableSpan): Request | RemoteDependency 
     }
 
     document = {
-      documentType: KnownDocumentIngressDocumentType.Request,
+      documentType: KnownDocumentType.Request,
       name: span.name,
       url: url,
       responseCode: code,
@@ -224,7 +226,7 @@ export function getSpanDocument(span: ReadableSpan): Request | RemoteDependency 
     }
 
     document = {
-      documentType: KnownDocumentIngressDocumentType.RemoteDependency,
+      documentType: KnownDocumentType.RemoteDependency,
       name: span.name,
       commandName: url,
       resultCode: code,
@@ -237,19 +239,19 @@ export function getSpanDocument(span: ReadableSpan): Request | RemoteDependency 
 
 export function getLogDocument(logRecord: LogRecord): Trace | Exception {
   let document: Trace | Exception = {
-    documentType: KnownDocumentIngressDocumentType.Exception,
+    documentType: KnownDocumentType.Exception,
   };
   const exceptionType = String(logRecord.attributes[SemanticAttributes.EXCEPTION_TYPE]);
   if (exceptionType) {
     const exceptionMessage = String(logRecord.attributes[SemanticAttributes.EXCEPTION_MESSAGE]);
     document = {
-      documentType: KnownDocumentIngressDocumentType.Exception,
+      documentType: KnownDocumentType.Exception,
       exceptionType: exceptionType,
       exceptionMessage: exceptionMessage,
     };
   } else {
     document = {
-      documentType: KnownDocumentIngressDocumentType.Trace,
+      documentType: KnownDocumentType.Trace,
       message: String(logRecord.body),
     };
   }

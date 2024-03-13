@@ -24,9 +24,9 @@ import {
   DocumentIngress,
   Exception,
   MonitoringDataPoint,
-  PingOptionalParams,
-  PingResponse,
-  PostResponse,
+  IsSubscribedOptionalParams,
+  IsSubscribedResponse,
+  PublishResponse,
   RemoteDependency,
   Request,
   Trace,
@@ -131,6 +131,8 @@ export class LiveMetrics {
       roleName: roleName,
       machineName: machineName,
       streamId: streamId,
+      isWebApp: false, // TODO: New property
+      performanceCollectionSupported: true // TODO: New property
     };
     const parsedConnectionString = ConnectionStringParser.parse(
       this.config.azureMonitorExporterOptions.connectionString,
@@ -162,8 +164,8 @@ export class LiveMetrics {
     if (!this.isCollectingData) {
       // If not collecting, Ping
       try {
-        let params: PingOptionalParams = {
-          xMsQpsTransmissionTime: getTransmissionTime(),
+        let params: IsSubscribedOptionalParams = {
+          transmissionTime: getTransmissionTime(),
           monitoringDataPoint: this.baseMonitoringDataPoint,
         };
         await context.with(suppressTracing(context.active()), async () => {
@@ -181,7 +183,8 @@ export class LiveMetrics {
     }
   }
 
-  private async quickPulseDone(response: PostResponse | PingResponse | undefined) {
+  // TODO: PublishResponse is not a valid type here since it doesn't have the same headers as IsSubscribed (ping) Response anymore.
+  private async quickPulseDone(response: PublishResponse | IsSubscribedResponse | undefined) {
     if (!response) {
       if (!this.isCollectingData) {
         if (Date.now() - this.lastSuccessTime >= MAX_PING_WAIT_TIME) {
@@ -208,6 +211,7 @@ export class LiveMetrics {
         this.handle.unref();
       }
 
+      // TOOD: Resolve this as pubish doesn't appear to have this header anymore
       this.pingSender.handlePermanentRedirect(response.xMsQpsServiceEndpointRedirectV2);
       this.quickpulseExporter
         .getSender()

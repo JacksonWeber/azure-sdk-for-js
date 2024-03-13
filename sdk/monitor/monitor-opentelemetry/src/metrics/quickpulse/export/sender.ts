@@ -3,10 +3,10 @@
 import url from "url";
 import { redirectPolicyName } from "@azure/core-rest-pipeline";
 import {
-  PingOptionalParams,
-  PingResponse,
-  PostOptionalParams,
-  PostResponse,
+  IsSubscribedOptionalParams,
+  IsSubscribedResponse,
+  PublishOptionalParams,
+  PublishResponse,
   QuickpulseClient,
   QuickpulseClientOptionalParams,
 } from "../../../generated";
@@ -31,7 +31,7 @@ export class QuickpulseSender {
   }) {
     // Build endpoint using provided configuration or default values
     this.quickpulseClientOptions = {
-      host: options.endpointUrl,
+      endpoint: options.endpointUrl,
     };
 
     this.instrumentationKey = options.instrumentationKey;
@@ -56,8 +56,8 @@ export class QuickpulseSender {
    * Ping Quickpulse service
    * @internal
    */
-  async ping(optionalParams: PingOptionalParams): Promise<PingResponse> {
-    let response = await this.quickpulseClient.ping(this.instrumentationKey, optionalParams);
+  async ping(optionalParams: IsSubscribedOptionalParams): Promise<IsSubscribedResponse> {
+    let response = await this.quickpulseClient.isSubscribed(this.instrumentationKey, optionalParams);
     return response;
   }
 
@@ -65,8 +65,8 @@ export class QuickpulseSender {
    * Post Quickpulse service
    * @internal
    */
-  async post(optionalParams: PostOptionalParams): Promise<PostResponse> {
-    let response = await this.quickpulseClient.post(this.instrumentationKey, optionalParams);
+  async post(optionalParams: PublishOptionalParams): Promise<PublishResponse> {
+    let response = await this.quickpulseClient.publish(this.instrumentationKey, optionalParams);
     return response;
   }
 
