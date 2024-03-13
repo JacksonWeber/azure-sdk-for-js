@@ -288,7 +288,7 @@ function createPropertiesFromAttributes(
           key === SemanticAttributes.EXCEPTION_MESSAGE
         )
       ) {
-        properties.push({ key: key, value: attributes[key] as string });
+        properties.push({ key: key, value: String(attributes[key]) });
       }
     }
   }
