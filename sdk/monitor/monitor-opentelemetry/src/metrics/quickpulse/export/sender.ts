@@ -22,6 +22,7 @@ export class QuickpulseSender {
   private readonly quickpulseClient: QuickpulseClient;
   private quickpulseClientOptions: QuickpulseClientOptionalParams;
   private instrumentationKey: string;
+  private endpointUrl: string;
 
   constructor(options: {
     endpointUrl: string;
@@ -29,9 +30,10 @@ export class QuickpulseSender {
     credential?: TokenCredential;
     aadAudience?: string;
   }) {
+    this.endpointUrl = options.endpointUrl;
     // Build endpoint using provided configuration or default values
     this.quickpulseClientOptions = {
-      endpoint: options.endpointUrl,
+      endpoint: this.endpointUrl
     };
 
     this.instrumentationKey = options.instrumentationKey;
@@ -57,7 +59,7 @@ export class QuickpulseSender {
    * @internal
    */
   async ping(optionalParams: IsSubscribedOptionalParams): Promise<IsSubscribedResponse> {
-    let response = await this.quickpulseClient.isSubscribed(this.instrumentationKey, optionalParams);
+    let response = await this.quickpulseClient.isSubscribed(this.endpointUrl, this.instrumentationKey, optionalParams);
     return response;
   }
 
@@ -66,7 +68,7 @@ export class QuickpulseSender {
    * @internal
    */
   async post(optionalParams: PublishOptionalParams): Promise<PublishResponse> {
-    let response = await this.quickpulseClient.publish(this.instrumentationKey, optionalParams);
+    let response = await this.quickpulseClient.publish(this.endpointUrl, this.instrumentationKey, optionalParams);
     return response;
   }
 
@@ -74,7 +76,11 @@ export class QuickpulseSender {
     if (location) {
       const locUrl = new url.URL(location);
       if (locUrl && locUrl.host) {
-        this.quickpulseClient.host = "https://" + locUrl.host;
+
+        this.endpointUrl = "https://" + locUrl.host;
+        this.quickpulseClientOptions = {
+          endpoint: this.endpointUrl,
+        };
       }
     }
   }

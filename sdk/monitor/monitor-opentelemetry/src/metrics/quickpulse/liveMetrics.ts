@@ -105,10 +105,10 @@ export class LiveMetrics {
   private lastExceptionRate: { count: number; time: number } = { count: 0, time: 0 };
   private lastCpus:
     | {
-        model: string;
-        speed: number;
-        times: { user: number; nice: number; sys: number; idle: number; irq: number };
-      }[]
+      model: string;
+      speed: number;
+      times: { user: number; nice: number; sys: number; idle: number; irq: number };
+    }[]
     | undefined;
 
   /**
@@ -211,13 +211,17 @@ export class LiveMetrics {
         this.handle.unref();
       }
 
-      // TOOD: Resolve this as pubish doesn't appear to have this header anymore
-      this.pingSender.handlePermanentRedirect(response.xMsQpsServiceEndpointRedirectV2);
-      this.quickpulseExporter
-        .getSender()
-        .handlePermanentRedirect(response.xMsQpsServiceEndpointRedirectV2);
-      if (response.xMsQpsServicePollingIntervalHint) {
-        this.pingInterval = Number(response.xMsQpsServicePollingIntervalHint);
+      const redirectEndpoint = (response as IsSubscribedResponse).xMsQpsServiceEndpointRedirectV2;
+      if (redirectEndpoint) {
+        this.pingSender.handlePermanentRedirect((response as IsSubscribedResponse).xMsQpsServiceEndpointRedirectV2);
+        this.quickpulseExporter
+          .getSender()
+          .handlePermanentRedirect(redirectEndpoint);
+      }
+
+      const pollingInterval = (response as IsSubscribedResponse).xMsQpsServicePollingIntervalHint;
+      if (pollingInterval) {
+        this.pingInterval = Number(pollingInterval);
       } else {
         this.pingInterval = PING_INTERVAL;
       }
