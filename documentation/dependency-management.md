@@ -10,6 +10,8 @@ In this document we'll outline a few options available to you when a transitive 
 
 Let's assume that a vulnerability has been found in [node-fetch] version 2.6.6 and that you use `@azure/keyvault-keys` directly. Your security scan identified this vulnerability and asks to upgrade to 2.6.7 or higher.
 
+> **Note:** The package versions in this example reflect an older version of the SDK where `@azure/core-http` was used as an intermediate dependency. Newer versions of `@azure/keyvault-keys` use `@azure/core-rest-pipeline` instead and no longer depend on `node-fetch`. The process described here applies to any transitive dependency regardless of the specific packages.
+
 The outputs below assume you're using `npm v8.1.2` with a lockfile, but we will provide instructions for Yarn as well.
 
 ### Identifying the dependency tree
