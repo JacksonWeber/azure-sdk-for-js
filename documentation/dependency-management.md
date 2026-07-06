@@ -12,6 +12,8 @@ In this document we'll outline a few options available to you when a transitive 
 
 ## Example scenario
 
+> **Note:** The following is an illustrative example. Package versions and dependency chains shown here are hypothetical and may not match current package versions.
+
 Let's assume that a vulnerability has been found in [node-fetch] version 2.6.6 and that you use `@azure/keyvault-keys` directly. Your security scan identified this vulnerability and asks to upgrade to 2.6.7 or higher.
 
 The outputs below assume you're using `npm v8.1.2` with a lockfile, but we will provide instructions for Yarn as well.
