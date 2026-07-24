@@ -3,7 +3,7 @@
 
 /**
  * This example shows how to use
- * [@opentelemetry/sdk-logs](https://github.com/open-telemetry/opentelemetry-js/tree/main/packages/sdk-logs)
+ * [@opentelemetry/sdk-logs](https://github.com/open-telemetry/opentelemetry-js/tree/main/experimental/packages/sdk-logs)
  * to instrument a simple Node.js application.
  *
  * @summary use opentelemetry logs in a Node.js application.
