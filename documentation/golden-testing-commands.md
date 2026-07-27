@@ -9,7 +9,7 @@ If you're looking to be onboarded to the asset-sync workflow to push out the tes
 | script name             | What does it do?                                                                                                |
 |:------------------------|:----------------------------------------------------------------------------------------------------------------|
 | `pnpm install`          | Updates dependencies                                                                                            |
-| `pnpm -F {./}... build` | Expected to be run from inside your package(`sdk/service-name/package-name`). Builds the whole dependency tree. |
+| `pnpm turbo build --filter={./}... --token 1` | Expected to be run from inside your package(`sdk/service-name/package-name`). Builds the whole dependency tree. |
 |                         |                                                                                                                 |
 
 ## Commands - to run the tests inside the package directory
