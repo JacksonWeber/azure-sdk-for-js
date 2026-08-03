@@ -31,10 +31,10 @@ Before starting the migration, ensure you have:
 
 ### Step 1: Install Required Tools
 
-Install the TypeSpec client generator CLI globally:
+Install repository dependencies so the checked-in `tsp-client` CLI is available:
 
 ```bash
-npm install -g @azure-tools/typespec-client-generator-cli
+pnpm install
 ```
 
 For more information on tsp-client, see the [TypeSpec Client Generator CLI documentation](https://aka.ms/azsdk/tsp-client)
@@ -100,7 +100,7 @@ Replace your AutoRest generation script with TypeSpec generation and customizati
 ```json
 {
   "scripts": {
-    "generate:client": "tsp-client update -d && npm run format && dev-tool customization apply --skip index.ts",
+    "generate:client": "tsp-client update -d && npm run format",
     "build": "npm run clean && dev-tool run build-package && dev-tool run extract-api",
     "test": "npm run test:node && npm run test:browser",
     "test:node": "dev-tool run build-test --no-browser-test && dev-tool run test:vitest"
@@ -145,7 +145,7 @@ npm run generate:client
 
 ### Step 7: Apply Customizations
 
-Use the dev-tool customization command to copy generated files to `src/` and merge with existing customizations:
+If the package is already set up for customization, use the dev-tool customization command to copy generated files to `src/` and merge with existing customizations:
 
 ```bash
 npx dev-tool customization apply --skip index.ts
@@ -243,7 +243,7 @@ Delete the following files that are no longer needed:
 2. **Build the package:**
 
    ```bash
-   pnpm turbo build --token 1
+   pnpm turbo build --filter=@azure/your-package-name... --token 1
    ```
 
 3. **Run tests:**
@@ -269,7 +269,7 @@ After migration, your development workflow becomes:
 
 1. **Update TypeSpec definitions** in azure-rest-api-specs
 2. **Generate new code:** `npm run generate:client`
-3. **Build and test:** `pnpm turbo build --token 1 && pnpm test`
+3. **Build and test:** `pnpm turbo build --filter=@azure/your-package-name... --token 1 && pnpm test`
 
 ### Version Management
 

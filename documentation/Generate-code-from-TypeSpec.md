@@ -48,8 +48,7 @@ SDK module would be generated under the SDK project folder at `sdk/<service>/<mo
 
 Install dependencies to use code-gen-pipeline,  
 ```ps
-npm --prefix eng/common/tsp-client ci
-npm install -g pnpm
+pnpm install
 npm --prefix eng/tools/js-sdk-release-tools ci
 ```
 
@@ -88,22 +87,22 @@ After all the steps finished, you can prepare the release for this generation. S
 ### Generate Code with tsp-client tool
 > To reduce workload and unnecessary mistakes, it is recommended to use the simple method from the previous section. Only if you are clear about what you are doing and the method from the previous section does not meet your needs, should you consider using the method below.
 
-Install `tsp-client` CLI tool
+Install repo dependencies so `tsp-client` is available
 
 ```ps
-npm --prefix eng/common/tsp-client ci
+pnpm install
 ```
 
 For initial set up, from the root of the SDK repo, call
 
 ```
-npm --prefix eng/common/tsp-client exec --no -- tsp-client init -c <url-to-tspconfig>
+pnpm tsp-client init -c <url-to-tspconfig>
 ```
 
 For updating TypeSpec generated SDK, call below in the SDK module folder (`sdk/<service>/<module>`) where `tsp-location.yaml` exists
 
 ```ps
-npm --prefix ../../../eng/common/tsp-client exec --no -- tsp-client update
+pnpm tsp-client update
 ```
 
 **Notice**
