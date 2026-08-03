@@ -124,7 +124,8 @@ Rehydration moved from an operation option (`resumeFrom`) to a **client‑level 
 const result = await client.beginStartAndWait({ resumeFrom: serializedState });
 
 // After (TypeSpec-generated)
-const result = await restorePoller(client, serializedState, client.start);
+const poller = restorePoller(client, serializedState, client.start);
+const result = await poller;
 ```
 For more detail, see the core‑lro migration guide:  
 https://github.com/Azure/azure-sdk-for-js/blob/main/sdk/core/core-lro/docs/MIGRATION.md
@@ -137,7 +138,7 @@ https://github.com/Azure/azure-sdk-for-js/blob/main/sdk/core/core-lro/docs/MIGRA
 - Replace `await beginXxx()` → `const poller = xxx()`.  
 - Replace `poller.toString()` → `await poller.serialize()`.  
 - Replace `poller.getOperationState()` → `poller.operationState` (guard for `undefined`).  
-- If you previously used `resumeFrom`, switch to `restorePoller(client, serialized, client.xxx)`.  
+- If you previously used `resumeFrom`, switch to `const poller = restorePoller(client, serialized, client.xxx); await poller;`.  
 - If you depended on `stopPolling()`/`isStopped()`, revisit your control flow (these are not exposed on `PollerLike`).
 
 ---

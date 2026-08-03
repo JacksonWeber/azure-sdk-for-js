@@ -29,7 +29,7 @@ domain and produces targeted, actionable feedback.
 On GitHub, only repository collaborators with at least **triage** or **write**
 access can add labels to pull requests. When one of these collaborators adds
 the corresponding **label** to a pull request, the agent runs automatically
-via a `pull_request_target` workflow.
+via the repository's agent review workflows.
 
 For example, to request an architecture review:
 
@@ -70,8 +70,9 @@ not duplicate findings from other agents.
 
 ## Using Agents Locally in VS Code
 
-The same agents are available as **custom agents** in VS Code Copilot Chat
-(via Copilot CLI). Their definitions live in `.github/agents/*.agent.md`.
+The same agents are available as **custom agents** in Copilot Chat experiences
+that support repository-defined agents. Their definitions live in
+`.github/agents/*.agent.md`.
 
 ### Prerequisites
 
