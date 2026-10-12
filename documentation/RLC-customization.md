@@ -42,7 +42,7 @@ export default function createClient(
   endpoint: string,
   credential: TokenCredential | MyServiceKeyCredential,
   options: ClientOptions = {}
-): GeneratedClient {
+): MyServiceClient {
   if (isTokenCredential(credential)) {
     return MyServiceClient(endpoint, credential, options);
   } else {
