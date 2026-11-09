@@ -202,7 +202,7 @@ pnpm pack
 
 You may send this artifact to your customer if your services are still in private preview and some customers want to try it out.
 
-# Create/Update the ci.yaml
+# Create/Update the ci.yml
 
 Now, if everything looks good to you, you can submit a PR in `azure-sdk-for-js` repo with all the changes you made above. Before you do that, you need to add/update the `ci.yml` file. Depends on whether there's already one in your package folder.
 
@@ -261,7 +261,7 @@ You shall update the version number according to [semantic versioning rule](http
 
 ## Test recordings
 
-After [writing and running test cases](#how-to-write-test-for-dpgrlc), you need to push the recordings to [assets repo](https://github.com/Azure/azure-sdk-assets). Please refer to [push recording guide](https://github.com/Azure/azure-sdk-for-js/blob/main/documentation/Quickstart-on-how-to-write-tests.md#how-to-push-test-recordings-to-assets-repo) to push recordings.
+After [writing and running test cases](#how-to-write-test-for-dpgrlcmpg), you need to push the recordings to [assets repo](https://github.com/Azure/azure-sdk-assets). Please refer to [push recording guide](https://github.com/Azure/azure-sdk-for-js/blob/main/documentation/Quickstart-on-how-to-write-tests.md#how-to-push-test-recordings-to-assets-repo) to push recordings.
 
 ## Fix CI for PR
 
