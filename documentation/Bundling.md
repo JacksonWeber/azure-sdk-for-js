@@ -438,7 +438,7 @@ Now you can invoke parcel on the command-line:
 parcel index.html
 ```
 
-This will bundle your code and create a local development server for your page at `http://localhost:1234`. Changes you make to `index.ts` will automatically get reflected on the dev server.
+This will bundle your code and create a local development server for your page at `http://localhost:1234`. Changes you make to `index.js` will automatically get reflected on the dev server.
 
 If you wish to bundle your page without using the local development server, you can do this by passing the `build` command:
 
